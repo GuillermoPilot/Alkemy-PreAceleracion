@@ -1,68 +1,42 @@
-package com.peliculas.Alkemy.Entities;
+package com.peliculas.Alkemy.DTO;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
-
+import com.peliculas.Alkemy.Entities.Imagen;
+import com.peliculas.Alkemy.Entities.Personaje;
 import com.peliculas.Alkemy.Enums.Calificacion;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Entity
-@Table(name = "pelicula")
 @Getter
 @Setter
-@SQLDelete(sql = "UPDATE pelicula SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false")
-public class Pelicula {
+public class PeliculaDTO {
 
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
 	private String id;
 
-	@OneToOne
 	private Imagen imagen;
 
 	private String titulo;
 
-	@Column(name = "fecha_creacion")
-	@Temporal(TemporalType.DATE)
 	private Date fechaCreacion;
 
-	@Enumerated(EnumType.ORDINAL)
 	private Calificacion calificacion;
 
-	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "pelicula_personajes", joinColumns = @JoinColumn(name = "pelicula_id"), inverseJoinColumns = @JoinColumn(name = "personaje_id"))
 	private List<Personaje> personajes = new ArrayList<>();
-
-	private boolean deleted = Boolean.FALSE;
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pelicula other = (Pelicula) obj;
-		return Objects.equals(id, other.id);
-	}
 
 	public String getId() {
 		return id;

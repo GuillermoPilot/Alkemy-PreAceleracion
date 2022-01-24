@@ -6,7 +6,9 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +57,12 @@ public class PersonajeController {
 	ResponseEntity<PersonajeDTO> edit(@RequestBody PersonajeDTO dto, String id) {
 		PersonajeDTO personajeEdited = service.edit(dto, id);
 		return ResponseEntity.ok().body(personajeEdited);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+		service.delete(id);
+		return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	}
 
 }

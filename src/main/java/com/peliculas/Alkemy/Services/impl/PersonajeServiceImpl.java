@@ -49,9 +49,7 @@ public class PersonajeServiceImpl implements PersonajeService {
 		PersonajeDTO result = new PersonajeDTO();
 		if (opt.isPresent()) {
 			entity = opt.get();
-			String idBackup = entity.getId();
 			entity = mapper.DTO2Entity(dto);
-			entity.setId(idBackup);
 			repo.save(entity);
 		}
 
