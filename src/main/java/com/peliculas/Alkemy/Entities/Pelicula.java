@@ -14,9 +14,8 @@ import com.peliculas.Alkemy.Enums.Calificacion;
 import lombok.Getter;
 import lombok.Setter;
 
-
 @Entity
-@Table(name= "pelicula")
+@Table(name = "pelicula")
 @Getter
 @Setter
 public class Pelicula {
@@ -28,25 +27,18 @@ public class Pelicula {
 
 	@OneToOne
 	private Imagen imagen;
-	
+
 	private String titulo;
-	
+
 	@Column(name = "fecha_creacion")
 	@Temporal(TemporalType.DATE)
 	private Date fechaCreacion;
 
 	@Enumerated(EnumType.ORDINAL)
 	private Calificacion calificacion;
-	
-	@ManyToMany(
-			cascade = {
-					CascadeType.PERSIST,
-					CascadeType.MERGE
-			})
-	@JoinTable(
-			name = "pelicula_personajes",
-			joinColumns = @JoinColumn(name = "pelicula_id"),
-			inverseJoinColumns = @JoinColumn(name = "personaje_id"))
+
+	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "pelicula_personajes", joinColumns = @JoinColumn(name = "pelicula_id"), inverseJoinColumns = @JoinColumn(name = "personaje_id"))
 	private List<Personaje> personajes = new ArrayList<>();
 
 	@Override
@@ -65,6 +57,53 @@ public class Pelicula {
 		Pelicula other = (Pelicula) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Imagen getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(Imagen imagen) {
+		this.imagen = imagen;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Calificacion getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(Calificacion calificacion) {
+		this.calificacion = calificacion;
+	}
+
+	public List<Personaje> getPersonajes() {
+		return personajes;
+	}
+
+	public void setPersonajes(List<Personaje> personajes) {
+		this.personajes = personajes;
+	}
+
 }
